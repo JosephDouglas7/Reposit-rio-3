@@ -1,0 +1,100 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  MyApp app = MyApp();
+  runApp(app);
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Dicas"),
+          actions: [
+            PopupMenuButton<Color>(
+              onSelected: (Color color) {
+                // Action to be defined later
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    value: Colors.red,
+                    child: Text("Red"),
+                  ),
+                  PopupMenuItem(
+                    value: Colors.green,
+                    child: Text("Green"),
+                  ),
+                  PopupMenuItem(
+                    value: Colors.blue,
+                    child: Text("Blue"),
+                  ),
+                ];
+              },
+            )
+          ],
+        ),
+        body: DataBodyWidget(objects: [
+          "1 - Todas as dicas relacionadas a Navios",
+          "2 - Todas as dicas relacionadas a Frutas",
+          "3 - Todas as dicas relacionadas a Bandeiras"
+        ]),
+        bottomNavigationBar: NewNavBar(
+          icons: [Icons.water_outlined, Icons.circle_outlined, Icons.flag_outlined],
+        ),
+      ),
+    );
+  }
+}
+
+class NewNavBar extends StatelessWidget {
+  final List<IconData> icons;
+  NewNavBar({this.icons = const []});
+
+  void botaoFoiTocado(int index) {
+    print("Tocaram no botão $index");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      onTap: botaoFoiTocado,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(icons[0]),
+          label: "Navio",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(icons[1]),
+          label: "Frutas",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(icons[2]),
+          label: "Bandeiras",
+        ),
+      ],
+    );
+  }
+}
+
+class DataBodyWidget extends StatelessWidget {
+  final List<String> objects;
+  DataBodyWidget({this.objects = const []});
+
+  Expanded processarUmElemento(String obj) {
+    return Expanded(
+      child: Center(child: Text(obj)),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: objects.map((obj) => processarUmElemento(obj)).toList(),
+    );
+  }
+}
