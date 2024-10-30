@@ -1,3 +1,5 @@
+Feito com ajuda do copilot para correção de erros de copilação: https://copilot.microsoft.com/
+
 import 'package:flutter/material.dart';
 
 void main() {
